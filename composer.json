@@ -1,0 +1,22 @@
+{
+	"name": "xes/mailgunlogger",
+	"type": "library",
+	"description": "Wrapper for Mailgun API to add fixed message types",
+	"homepage": "https://github.com/dan1elhughes/mailgunlogger",
+	"authors": [
+		{
+			"name": "Dan Hughes",
+			"email": "dh@xes.io",
+			"homepage": "https://xes.io",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"mailgun/mailgun-php": "~1.7"
+	},
+	"autoload": {
+		"psr-4": {
+			"xes\\": "src/"
+		}
+	}
+}
