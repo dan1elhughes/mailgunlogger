@@ -17,6 +17,21 @@ class MailgunLogger {
 		$this->from = $settings['from'];
 	}
 
+	private function generateFooter($debug) {
+		$file = $debug['file'];
+		$line = $debug['line'];
+		$ip = $_SERVER['REMOTE_ADDR'];
+		$host = gethostname();
+
+		$f = "\n\n---\n";
+		$f .= "File: $file\n";
+		$f .= "Line: $line\n";
+		$f .= "Remote IP: $ip\n";
+		$f .= "Server: $host\n";
+
+		return $f;
+	}
+
 	public function add($type, $body) {
 		$this->mails[$type] = $body;
 	}
@@ -25,10 +40,10 @@ class MailgunLogger {
 		if (array_key_exists($type, $this->mails)) {
 
 			$mail = array(
-				'from'    => 'auto@xes.io',
-				'to'      => 'auto@xes.io',
-				'subject' => "Alert : $type",
-				'text'    => $this->mails[$type]
+				'from'    => $this->from,
+				'to'      => $this->to,
+				'subject' => "Alert triggered on $this->domain: $type",
+				'text'    => $this->mails[$type] . $this->generateFooter(debug_backtrace()[0])
 			);
 
 			if ($real) {
@@ -48,5 +63,4 @@ class MailgunLogger {
 		));
 	}
 }
-
 ?>
